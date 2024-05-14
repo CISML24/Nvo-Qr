@@ -54,15 +54,20 @@
     <button onclick="checkPassword()">Ingresar</button>
   </div>
 
+  <div id="teamSeries" style="display:none;">
+    <h2>Serie del equipo:</h2>
+    <input type="text" id="teamSeriesInput">
+    <button onclick="executeCode()">Continuar</button>
+  </div>
+
   <div class="lds-ring" id="loadingSpinner" style="display:none;"><div></div><div></div><div></div><div></div></div>
 
   <script>
-    const AS_URL_BASE = "https://script.google.com/macros/s/AKfycbw60pLGYBwVEaqZBMP2ay4zz8-5mYz2apded15GIokkh6tfsF-cU3l3GtVCwtOO_TCD/exec";
+    const AS_URL_BASE = "https://script.google.com/macros/s/AKfycby0l4OnDiioT1S6e6Zrw4ZN8JWxbCl1_c_vjYF_0hcIA9Z781XWISuqx_ee5GXlgdtawQ/exec";
     const PASSWORD = "1903"; // Cambia "tu_contraseña" por tu contraseña real
 
     function showPasswordDialog() {
       document.getElementById("passwordDialog").style.display = "block";
-      ejecutarOtraAppScript();
     }
 
     function hidePasswordDialog() {
@@ -72,33 +77,32 @@
     function checkPassword() {
       const passwordInput = document.getElementById("passwordInput").value;
       if (passwordInput === PASSWORD) {
-        executeCode();
+        document.getElementById("teamSeries").style.display = "block";
+        hidePasswordDialog();
       } else {
         alert("Contraseña incorrecta. Por favor, inténtelo de nuevo.");
       }
     }
 
     function executeCode() {
-      hidePasswordDialog();
-      const url = document.location.href;
-      const k = url.substr(url.lastIndexOf("k=") + 2);
-      if (k) {
-        document.getElementById("loadingSpinner").style.display = "block";
-        fetch(AS_URL_BASE + '?k=' + k)
-          .then(r => r.text())
-          .then((r) => {
-            console.log(r);
-            if (r) {
-              document.location.replace(r);
-            }
-            
-          })
-          .catch(err => console.log(err));
-      }
+      const teamSeriesInput = document.getElementById("teamSeriesInput").value;
+      document.getElementById("teamSeries").style.display = "none";
+      document.getElementById("loadingSpinner").style.display = "block";
+      ejecutarOtraAppScript();
+      fetch(AS_URL_BASE + '?k=' + teamSeriesInput)
+        .then(r => r.text())
+        .then((r) => {
+          console.log(r);
+          if (r) {
+            document.location.replace(r);
+          }
+          
+        })
+        .catch(err => console.log(err));
     }
 
     function ejecutarOtraAppScript() {
-      const otraAppUrl = "https://script.google.com/macros/s/AKfycbxyRuELRvzI9bSWH2aeh6txzBW-aPcJ_KohmdMG72PgTqHwLM-fcE-VQF-lqrtSr0P6/exec";
+      const otraAppUrl = "https://script.google.com/macros/s/AKfycbzCDVxxLftUbwp4E7edZZNX_l-DUntrNsmtPdjH7clnv6kX0O0ODi0TUYFc-kT80O_i6w/exec";
       fetch(otraAppUrl)
         .then(response => {
           console.log("La otra aplicación se ha ejecutado.");
