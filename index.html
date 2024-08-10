@@ -48,13 +48,7 @@
   </style>
 </head>
 <body>
-  <div id="passwordDialog" style="display:none;">
-    <h2>Ingrese la contraseña:</h2>
-    <input type="password" id="passwordInput">
-    <button onclick="checkPassword()">Ingresar</button>
-  </div>
-
-  <div id="teamSeries" style="display:none;">
+  <div id="teamSeries">
     <h2>Serie del equipo:</h2>
     <input type="text" id="teamSeriesInput">
     <button onclick="executeCode()">Continuar</button>
@@ -64,24 +58,9 @@
 
   <script>
     const AS_URL_BASE = "https://script.google.com/macros/s/AKfycby0l4OnDiioT1S6e6Zrw4ZN8JWxbCl1_c_vjYF_0hcIA9Z781XWISuqx_ee5GXlgdtawQ/exec";
-    const PASSWORD = "1903"; // Cambia "tu_contraseña" por tu contraseña real
 
     function showPasswordDialog() {
-      document.getElementById("passwordDialog").style.display = "block";
-    }
-
-    function hidePasswordDialog() {
-      document.getElementById("passwordDialog").style.display = "none";
-    }
-
-    function checkPassword() {
-      const passwordInput = document.getElementById("passwordInput").value;
-      if (passwordInput === PASSWORD) {
-        document.getElementById("teamSeries").style.display = "block";
-        hidePasswordDialog();
-      } else {
-        alert("Contraseña incorrecta. Por favor, inténtelo de nuevo.");
-      }
+      document.getElementById("teamSeries").style.display = "block";
     }
 
     function executeCode() {
@@ -96,7 +75,6 @@
           if (r) {
             document.location.replace(r);
           }
-          
         })
         .catch(err => console.log(err));
     }
@@ -114,7 +92,7 @@
         });
     }
 
-    // Mostrar el cuadro de diálogo de la contraseña cuando se carga la página
+    // Mostrar directamente el cuadro de serie del equipo cuando se carga la página
     window.onload = showPasswordDialog;
   </script>
 </body>
